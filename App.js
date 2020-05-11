@@ -1,5 +1,9 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
 
 //importanto las pantallas
 import NuevaOrden from "./views/NuevaOrden";
@@ -18,7 +22,27 @@ import FirebaseState from "./context/firebase/firebaseState";
 import PedidoState from "./context/pedidos/pedidosState";
 
 const Stack = createStackNavigator();
+
 export default function App() {
+  const [isReady, setisReady] = useState(false);
+
+  //Soluciona el problema de fuentes de natibase y expo
+  useEffect(() => {
+    font();
+  }, []);
+
+  async function font() {
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      ...Ionicons.font,
+    });
+    setisReady(true);
+  }
+  if (!isReady) {
+    return <AppLoading />;
+  }
+
   return (
     <>
       <FirebaseState>

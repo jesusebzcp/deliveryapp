@@ -10,13 +10,15 @@ import {
   Body,
   Text,
   H1,
-  Card,
-  CardItem,
 } from "native-base";
 
 import pedidoContext from "../context/pedidos/pedidosContext";
 
+import { useNavigation } from "@react-navigation/native";
+
 const DetalleProducto = () => {
+  //Redirecionar
+  const navigation = useNavigation();
   //PedidoContext
   const { producto } = useContext(pedidoContext);
   //Extraer propiedades necesarias
@@ -32,6 +34,13 @@ const DetalleProducto = () => {
         </Text>
         <Text style={styles.precio}>Precio:{precio}$</Text>
       </Content>
+      <Footer>
+        <FooterTab>
+          <Button onPress={() => navigation.navigate("FormularioPedido")}>
+            <Text>Pedir esto</Text>
+          </Button>
+        </FooterTab>
+      </Footer>
     </Container>
   );
 };
