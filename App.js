@@ -20,6 +20,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 //Importando state de context
 import FirebaseState from "./context/firebase/firebaseState";
 import PedidoState from "./context/pedidos/pedidosState";
+//Boton del pedido
+import BotonPedido from "./components/ui/BotonPedido";
+
+//Boton del pedido
 
 const Stack = createStackNavigator();
 
@@ -67,6 +71,7 @@ export default function App() {
                 component={Menu}
                 options={{
                   title: "Menu",
+                  headerRight: (props) => <BotonPedido />,
                 }}
               />
 
