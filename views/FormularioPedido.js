@@ -27,7 +27,7 @@ const FormularioPedido = () => {
   console.log(total);
 
   //extraer el precio del context
-  const { producto } = useContext(pedidoContext);
+  const { producto, guardarPedido } = useContext(pedidoContext);
   const { precio } = producto;
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const FormularioPedido = () => {
   const confirmaOrdne = () => {
     Alert.alert(
       "¿Deseas confirmar tu pedido?",
-      "Una vez confirmes tu pedidos, no lo podras modificar",
+      "Una vez confirmes tu pedido, no lo podras modificar",
       [
         {
           text: "Confirmar",
@@ -68,8 +68,10 @@ const FormularioPedido = () => {
               cantidad,
               total,
             };
-            console.log(pedido);
+            guardarPedido(pedido);
             //Navegar hacia el resumen
+
+            navigation.navigate("ResumenPedido");
           },
         },
         {
