@@ -11,78 +11,113 @@ import {
   Text,
   H1,
   Form,
+  Footer,
+  FooterTab,
 } from "native-base";
 
 import pedidoContext from "../context/pedidos/pedidosContext";
+import { useNavigation } from "@react-navigation/native";
+import { Alert } from "react-native";
 
 const FormularioPedido = () => {
-  //Precio para sumar la cantidad total
+  //Redirecionar
+  const navigation = useNavigation();
+  const [cantidad, setcantidad] = useState(1);
+  const [total, setotal] = useState(0);
+  console.log(total);
+
+  //extraer el precio del context
   const { producto } = useContext(pedidoContext);
   const { precio } = producto;
 
-  //state cantidad
-  const [cantidad, setCantidad] = useState(1);
-  //StatePrecio
-  const [total, setTotal] = useState(0);
-  //Almacena cantidad via input
+  useEffect(() => {
+    calcularTotal();
+  }, [cantidad]);
 
+  //calcular
   const calcularTotal = () => {
     const totalPagar = precio * cantidad;
-    setTotal(totalPagar);
+    setotal(totalPagar);
   };
 
-  const incrementarUno = () => {
-    const NuevaCantidad = parseInt(cantidad) + 1;
-
-    setCantidad(NuevaCantidad);
-  };
+  //Decrementar
   const decrementarUno = () => {
     if (cantidad > 1) {
-      const NuevaCantidad = parseInt(cantidad) - 1;
-      setCantidad(NuevaCantidad);
+      const nuevaCantidad = parseInt(cantidad) - 1;
+      setcantidad(nuevaCantidad);
     }
   };
-  useEffect(() => {
-    cantidadPagarTotal();
-  }, [cantidad]);
-  function cantidadPagarTotal() {
-    calcularTotal();
-  }
+  //Incrementar
+  const incrementarUno = () => {
+    const nuevaCantidad = parseInt(cantidad) + 1;
+    setcantidad(nuevaCantidad);
+  };
+  //Confirma  si la orden es correcta
+
+  const confirmaOrdne = () => {
+    Alert.alert(
+      "¿Deseas confirmar tu pedido?",
+      "Una vez confirmes tu pedidos, no lo podras modificar",
+      [
+        {
+          text: "Confirmar",
+          onPress: () => {
+            //Almacenar pedido al pedido principal
+            const pedido = {
+              ...producto,
+              cantidad,
+              total,
+            };
+            console.log(pedido);
+            //Navegar hacia el resumen
+          },
+        },
+        {
+          text: " Cancelar",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
   return (
     <Container>
       <Content>
         <Form>
-          <H1>cantidad</H1>
+          <H1>sumar</H1>
           <Grid>
             <Col>
-              <Button
-                onPress={() => decrementarUno()}
-                style={{ justifyContent: "center" }}
-              >
+              <Button props dark onPress={() => decrementarUno()}>
                 <Icon name="remove" />
               </Button>
             </Col>
-            <Col style={{ justifyContent: "center" }}>
+
+            <Col>
               <Input
                 keyboardType="numeric"
-                style={{ textAlign: "center" }}
                 value={cantidad.toString()}
-                onChangeText={() => calcularCantidad(cantidad)}
+                style={{ textAlign: "center", fontSize: 20 }}
+                onChangeText={(cantidad) => setcantidad(cantidad)}
               />
             </Col>
+
             <Col>
-              <Button
-                onPress={() => incrementarUno()}
-                calcularCantidad
-                style={{ justifyContent: "center" }}
-              >
+              <Button props dark onPress={() => incrementarUno()}>
                 <Icon name="add" />
               </Button>
             </Col>
           </Grid>
-          <Text>Total:{total}$</Text>
+
+          <Text>Total{total}</Text>
         </Form>
       </Content>
+      <Footer>
+        <FooterTab>
+          <Button onPress={() => confirmaOrdne()}>
+            <Text>Agregar al pedido </Text>
+          </Button>
+        </FooterTab>
+      </Footer>
     </Container>
   );
 };
