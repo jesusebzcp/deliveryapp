@@ -9,7 +9,7 @@ const BotonPedido = () => {
 
   //Leer el objecto de pedido
   const { pedido } = useContext(PedidoContext);
-  if (pedido.length) return null;
+  if (pedido.length === 0) return null;
 
   return (
     <Button onPress={() => navigation.navigate("ResumenPedido")}>
