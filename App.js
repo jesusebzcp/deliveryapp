@@ -79,28 +79,28 @@ export default function App() {
                 name="DetalleProducto"
                 component={DetalleProducto}
                 options={{
-                  title: "DetalleProducto",
+                  title: "Detalle Producto",
                 }}
               />
               <Stack.Screen
                 name="FormularioPedido"
                 component={FormularioPedido}
                 options={{
-                  title: "FormularioPedido",
+                  title: "Formulario Pedido",
                 }}
               />
               <Stack.Screen
                 name="ResumenPedido"
                 component={ResumenPedido}
                 options={{
-                  title: "ResumenPedido",
+                  title: "Resumen Pedido",
                 }}
               />
               <Stack.Screen
                 name="ProgresoPedido"
                 component={ProgresoPedido}
                 options={{
-                  title: "ProgresoPedido",
+                  title: "Progreso Pedido",
                 }}
               />
             </Stack.Navigator>

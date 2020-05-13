@@ -14,16 +14,18 @@ import {
   Footer,
   FooterTab,
 } from "native-base";
+import firebase from "../firebase";
 
 import pedidoContext from "../context/pedidos/pedidosContext";
 
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-
 const ResumenPedido = () => {
   const navigation = useNavigation();
   //Context de pedido
-  const { pedido, total, mostrarResumen } = useContext(pedidoContext);
+  const { pedido, total, mostrarResumen, eliminarProducto } = useContext(
+    pedidoContext
+  );
   useEffect(() => {
     calcularTotal();
   }, [pedido]);
@@ -38,20 +40,49 @@ const ResumenPedido = () => {
   };
 
   const progresoPedido = () => {
-    navigation.navigate("ProgresoPedido");
     Alert.alert(
       "Revisa tu pedido",
       "Una vez que revisas tu pedido no podras cambiarlo",
       [
         {
           text: "Confirmar",
-          onPress: () => {
-            navigation.navigate("ProgresoPedido");
+          onPress: async () => {
+            //Escribir en firebase
+            //Crear un objecto con toda la infromacion que requerimos
+            const pedidoObj = {
+              tiempoEntrega: 0,
+              completado: false,
+              total: Number(total),
+              orden: pedido, //Array
+              creado: Date.now(),
+            };
+            try {
+              const pedido = await firebase.db
+                .collection("ordenes")
+                .add(pedidoObj);
+              pedidoRealizado(pedido.id);
+              navigation.navigate("ProgresoPedido");
+            } catch (error) {
+              console.log(error);
+            }
           },
         },
         { text: "Revisar", style: "cancel" },
       ]
     );
+  };
+
+  const confirmarEliminacion = (id) => {
+    Alert.alert("¿Deseas Eliminar este articulo?", "Una vez eliminado", [
+      {
+        text: "Confirmar",
+        onPress: () => {
+          //Eliminar del state
+          eliminarProducto(id);
+        },
+      },
+      { text: "Cancelar", style: "cancel" },
+    ]);
   };
   return (
     <Container>
@@ -70,6 +101,9 @@ const ResumenPedido = () => {
                   <Text>{nombre}</Text>
                   <Text>Cantidad:{cantidad}</Text>
                   <Text>Precio{precio}$</Text>
+                  <Button onPress={() => confirmarEliminacion(id)} danger full>
+                    <Text>Eliminar</Text>
+                  </Button>
                 </Body>
               </ListItem>
             </List>
@@ -83,7 +117,7 @@ const ResumenPedido = () => {
       </Content>
       <Footer>
         <FooterTab>
-          <Button onPress={() => ProgresoPedido}>
+          <Button onPress={() => progresoPedido()}>
             <Text>Ordenar Pedido </Text>
           </Button>
         </FooterTab>
