@@ -1,19 +1,21 @@
-import React from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { Text, View, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const NuevaOrden = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text style={styles.textCenter}>Por favor crea una nueva orden</Text>
+      <Text style={styles.textCenter}>
+        beba todo es posible con la programacion
+      </Text>
       <View style={styles.conBtnPrincipal}>
         <View style={styles.conBtn}>
           <Button
             style={styles.container}
             title="Nueva Pedido"
             color="#f7520c"
-            onPress={() => navigation.navigate("Menu")}
+            onPress={() => navigation.navigate('Menu')}
           />
         </View>
       </View>
@@ -24,11 +26,11 @@ const NuevaOrden = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    flexDirection: "column",
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   textCenter: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   conBtn: {
     marginHorizontal: 10,

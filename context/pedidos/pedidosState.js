@@ -1,14 +1,14 @@
-import React, { useReducer } from "react";
+import React, { useReducer } from 'react';
 
-import PedidosReducer from "./pedidosReducer";
-import PedidoContext from "./pedidosContext";
+import PedidosReducer from './pedidosReducer';
+import PedidoContext from './pedidosContext';
 import {
   SELECCIONAR_PRODUCTO,
   CONFIRMAR_ORDENAR_PRODUCTO,
   MOSTAR_RESUMEN,
   ELIMINAR_PRODUCTO,
   PEDIDO_ORDENADO,
-} from "../../types";
+} from '../../types';
 
 const PedidoState = (props) => {
   //State inicial
@@ -16,7 +16,7 @@ const PedidoState = (props) => {
     pedido: [],
     producto: null,
     total: 0,
-    idPedido: "",
+    idPedido: '',
   };
   const [state, dispatch] = useReducer(PedidosReducer, initialState);
   //Selecciona el producto que el usuario desea ordenar
@@ -48,7 +48,7 @@ const PedidoState = (props) => {
       payload: id,
     });
   };
-  const pedidoRealizado = () => {
+  const pedidoRealizado = (id) => {
     dispatch({
       type: PEDIDO_ORDENADO,
       payload: id,

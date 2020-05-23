@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 
 import {
   Container,
@@ -13,19 +13,23 @@ import {
   H1,
   Footer,
   FooterTab,
-} from "native-base";
-import firebase from "../firebase";
+} from 'native-base';
+import firebase from '../firebase';
 
-import pedidoContext from "../context/pedidos/pedidosContext";
+import pedidoContext from '../context/pedidos/pedidosContext';
 
-import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
 const ResumenPedido = () => {
   const navigation = useNavigation();
   //Context de pedido
-  const { pedido, total, mostrarResumen, eliminarProducto } = useContext(
-    pedidoContext
-  );
+  const {
+    pedido,
+    total,
+    mostrarResumen,
+    eliminarProducto,
+    pedidoRealizado,
+  } = useContext(pedidoContext);
   useEffect(() => {
     calcularTotal();
   }, [pedido]);
@@ -34,18 +38,18 @@ const ResumenPedido = () => {
     let nuevoTotal = 0;
     nuevoTotal = pedido.reduce(
       (nuevoTotal, articulos) => nuevoTotal + articulos.total,
-      0
+      0,
     );
     mostrarResumen(nuevoTotal);
   };
 
   const progresoPedido = () => {
     Alert.alert(
-      "Revisa tu pedido",
-      "Una vez que revisas tu pedido no podras cambiarlo",
+      'Revisa tu pedido',
+      'Una vez que revisas tu pedido no podras cambiarlo',
       [
         {
-          text: "Confirmar",
+          text: 'Confirmar',
           onPress: async () => {
             //Escribir en firebase
             //Crear un objecto con toda la infromacion que requerimos
@@ -56,32 +60,33 @@ const ResumenPedido = () => {
               orden: pedido, //Array
               creado: Date.now(),
             };
+
             try {
               const pedido = await firebase.db
-                .collection("ordenes")
+                .collection('ordenes')
                 .add(pedidoObj);
               pedidoRealizado(pedido.id);
-              navigation.navigate("ProgresoPedido");
+              navigation.navigate('ProgresoPedido');
             } catch (error) {
               console.log(error);
             }
           },
         },
-        { text: "Revisar", style: "cancel" },
-      ]
+        { text: 'Revisar', style: 'cancel' },
+      ],
     );
   };
 
   const confirmarEliminacion = (id) => {
-    Alert.alert("¿Deseas Eliminar este articulo?", "Una vez eliminado", [
+    Alert.alert('¿Deseas Eliminar este articulo?', 'Una vez eliminado', [
       {
-        text: "Confirmar",
+        text: 'Confirmar',
         onPress: () => {
           //Eliminar del state
           eliminarProducto(id);
         },
       },
-      { text: "Cancelar", style: "cancel" },
+      { text: 'Cancelar', style: 'cancel' },
     ]);
   };
   return (
@@ -111,7 +116,7 @@ const ResumenPedido = () => {
         })}
         <H1>Total a pagar:{total}$</H1>
 
-        <Button onPress={() => navigation.navigate("Menu")}>
+        <Button onPress={() => navigation.navigate('Menu')}>
           <Text>Seguir pediendo</Text>
         </Button>
       </Content>
