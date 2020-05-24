@@ -24,13 +24,12 @@ const Registro = () => {
   const [nombre, setnombre] = useState('');
   const [correo, setcorreo] = useState('');
   const [password, setpassword] = useState('');
-  const [telefono, settelefono] = useState('');
+
   const [mensaje, setmensaje] = useState(null);
-  console.log(typeof telefono);
 
   const crearCuenta = async () => {
     //validar
-    if (nombre === '' && correo === '' && password === '' && telefono === '') {
+    if (nombre === '' && correo === '' && password === '') {
       setmensaje('Todos los campos son obligatorios');
 
       return;
@@ -97,17 +96,6 @@ const Registro = () => {
                 name={password}
                 placeholder="Contraseña"
                 secureTextEntry={true}
-              />
-            </InputGroup>
-          </ListItem>
-          <ListItem>
-            <InputGroup>
-              <Icon name="call" style={{ fontSize: 20, color: 'black' }} />
-              <Input
-                keyboardType="numeric"
-                onChangeText={(texto) => settelefono(texto)}
-                name={telefono}
-                placeholder="+57 300 1234567"
               />
             </InputGroup>
           </ListItem>
