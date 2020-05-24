@@ -16,6 +16,7 @@ import {
   View,
 } from 'native-base';
 import firebase from '../firebase';
+
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
@@ -44,7 +45,7 @@ const Login = () => {
       await firebase.auth.signInWithEmailAndPassword(correo, password);
       navigation.navigate('Menu');
     } catch (error) {
-      setmensaje(error);
+      setmensaje(error.message);
     }
   };
 
