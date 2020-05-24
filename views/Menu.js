@@ -27,24 +27,14 @@ const Menu = () => {
   //HOOK para redirecionar a detalle platillo
   const navigation = useNavigation();
 
-  const mostrarHeading = (categoria, i) => {
+  const mostrarHeading = (categoria) => {
     //Mostrar categorias separadas
-    if (i > 0) {
-      let categoriaAnterior = menu[i - 0].categoria;
-      if (categoriaAnterior !== categoria) {
-        return (
-          <Separator>
-            <Text>{categoria}</Text>
-          </Separator>
-        );
-      } else {
-        return (
-          <Separator>
-            <Text>{categoria}</Text>
-          </Separator>
-        );
-      }
-    }
+
+    return (
+      <Separator>
+        <Text>{categoria}</Text>
+      </Separator>
+    );
   };
   return (
     <Container>
