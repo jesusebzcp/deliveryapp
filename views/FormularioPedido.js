@@ -14,9 +14,6 @@ import {
   Footer,
   FooterTab,
   Textarea,
-  InputGroup,
-  List,
-  ListItem,
 } from 'native-base';
 
 import pedidoContext from '../context/pedidos/pedidosContext';
@@ -26,19 +23,21 @@ import FirebaseContext from '../context/firebase/firebaseContext';
 
 const FormularioPedido = () => {
   const { usuario } = useContext(FirebaseContext);
+
   const { uid, displayName } = usuario;
 
   //Redirecionar
   const navigation = useNavigation();
   const [cantidad, setcantidad] = useState(1);
-  const [usuarioDate, setUsuarioDate] = useState({});
+
   const [total, setotal] = useState(0);
   const [comentarios, setComentarios] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, settelefono] = useState('');
 
   //extraer el precio del context
-  const { producto, guardarPedido } = useContext(pedidoContext);
+  const { producto, guardarPedido, pedido } = useContext(pedidoContext);
+  console.log(' aqui va el', pedido);
   const { precio } = producto;
 
   useEffect(() => {
@@ -80,9 +79,11 @@ const FormularioPedido = () => {
               total,
               comentarios,
               direccion,
-              usuarioDate,
+              uid,
+              displayName,
+              telefono,
             };
-            setUsuarioDate({ cliente: { uid, displayName, telefono } });
+
             guardarPedido(pedido);
 
             //Navegar hacia el resumen
@@ -125,31 +126,34 @@ const FormularioPedido = () => {
               </Button>
             </Col>
           </Grid>
-          <Grid>
-            <Col>
-              <View>
-                <Input
-                  bordered
-                  onChangeText={(texto) => setDireccion(texto)}
-                  bordered
-                  placeholder="Direccion de entrega"
-                />
-              </View>
-            </Col>
+          {pedido.length === 0 && (
+            <>
+              <Grid>
+                <Col>
+                  <View>
+                    <Input
+                      bordered
+                      onChangeText={(texto) => setDireccion(texto)}
+                      bordered
+                      placeholder="Direccion de entrega"
+                    />
+                  </View>
+                </Col>
 
-            <Col>
-              <View>
-                <Input
-                  bordered
-                  keyboardType="numeric"
-                  onChangeText={(texto) => settelefono(texto)}
-                  name={telefono}
-                  placeholder="Numero por si las dudas"
-                />
-              </View>
-            </Col>
-          </Grid>
-
+                <Col>
+                  <View>
+                    <Input
+                      bordered
+                      keyboardType="numeric"
+                      onChangeText={(texto) => settelefono(texto)}
+                      name={telefono}
+                      placeholder="Numero por si las dudas"
+                    />
+                  </View>
+                </Col>
+              </Grid>
+            </>
+          )}
           <View>
             <Textarea
               onChangeText={(texto) => setComentarios(texto)}
@@ -158,7 +162,6 @@ const FormularioPedido = () => {
               placeholder="Comentarios"
             />
           </View>
-
           <Text>Total{total}</Text>
         </Form>
       </Content>

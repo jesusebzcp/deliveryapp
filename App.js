@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -25,13 +25,15 @@ import PedidoState from './context/pedidos/pedidosState';
 import BotonPedido from './components/ui/BotonPedido';
 import Registro from './views/Registro';
 import { Root } from 'native-base';
-import DetalleEntrega from './views/DetalleEntrega';
+import useAutenticacion from './Hooks/useAutenticacion';
 
 //Boton del pedido
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const usuario = useAutenticacion();
+
   const [isReady, setisReady] = useState(false);
 
   //Soluciona el problema de fuentes de natibase y expo
@@ -58,73 +60,73 @@ export default function App() {
           <PedidoState>
             <NavigationContainer>
               <Stack.Navigator
-                initialRouteName="Login"
                 screenOptions={{
                   headerStyle: {
                     backgroundColor: 'white',
                   },
                 }}
               >
-                <Stack.Screen
-                  name="Login"
-                  component={Login}
-                  options={{
-                    title: 'Login',
-                    headerShown: false,
-                  }}
-                />
-                <Stack.Screen
-                  name="Registro"
-                  component={Registro}
-                  options={{
-                    title: 'Registro',
-                  }}
-                />
+                {!usuario && (
+                  <>
+                    <Stack.Screen
+                      name="Login"
+                      component={Login}
+                      options={{
+                        title: 'Login',
+                        headerShown: false,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="Registro"
+                      component={Registro}
+                      options={{
+                        title: 'Registro',
+                      }}
+                    />
+                  </>
+                )}
+                {usuario && (
+                  <>
+                    <Stack.Screen
+                      name="Menu"
+                      component={Menu}
+                      options={{
+                        title: 'Menu',
+                        headerRight: (props) => <BotonPedido />,
+                      }}
+                    />
 
-                <Stack.Screen
-                  name="Menu"
-                  component={Menu}
-                  options={{
-                    title: 'Menu',
-                    headerRight: (props) => <BotonPedido />,
-                  }}
-                />
+                    <Stack.Screen
+                      name="DetalleProducto"
+                      component={DetalleProducto}
+                      options={{
+                        title: 'Detalle Producto',
+                      }}
+                    />
+                    <Stack.Screen
+                      name="FormularioPedido"
+                      component={FormularioPedido}
+                      options={{
+                        title: 'Formulario Pedido',
+                      }}
+                    />
 
-                <Stack.Screen
-                  name="DetalleProducto"
-                  component={DetalleProducto}
-                  options={{
-                    title: 'Detalle Producto',
-                  }}
-                />
-                <Stack.Screen
-                  name="FormularioPedido"
-                  component={FormularioPedido}
-                  options={{
-                    title: 'Formulario Pedido',
-                  }}
-                />
-                <Stack.Screen
-                  name="DetalleEntrega"
-                  component={DetalleEntrega}
-                  options={{
-                    title: ' DetalleEntrega',
-                  }}
-                />
-                <Stack.Screen
-                  name="ResumenPedido"
-                  component={ResumenPedido}
-                  options={{
-                    title: 'Resumen Pedido',
-                  }}
-                />
-                <Stack.Screen
-                  name="ProgresoPedido"
-                  component={ProgresoPedido}
-                  options={{
-                    title: 'Progreso Pedido',
-                  }}
-                />
+                    <Stack.Screen
+                      name="ResumenPedido"
+                      component={ResumenPedido}
+                      options={{
+                        title: 'Resumen Pedido',
+                      }}
+                    />
+                    <Stack.Screen
+                      name="ProgresoPedido"
+                      component={ProgresoPedido}
+                      options={{
+                        title: 'Progreso Pedido',
+                      }}
+                    />
+                  </>
+                )}
               </Stack.Navigator>
             </NavigationContainer>
           </PedidoState>

@@ -53,11 +53,7 @@ const ProgresoPedido = () => {
           <H1>Orden lista </H1>
           <H1>la beba va en camino ezperanzita maldita criada</H1>
 
-          <Button
-            onPress={() => navigation.navigate('NuevaOrden')}
-            rounded
-            block
-          >
+          <Button onPress={() => navigation.navigate('Menu')} rounded block>
             <Text>Comenzar nueva orden</Text>
           </Button>
         </>
