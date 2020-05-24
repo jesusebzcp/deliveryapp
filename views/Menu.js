@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, Fragment } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useContext, Fragment } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -10,10 +10,10 @@ import {
   Text,
   Body,
   Thumbnail,
-} from "native-base";
+} from 'native-base';
 
-import FirebaseContext from "../context/firebase/firebaseContext";
-import PedidoContext from "../context/pedidos/pedidosContext";
+import FirebaseContext from '../context/firebase/firebaseContext';
+import PedidoContext from '../context/pedidos/pedidosContext';
 
 const Menu = () => {
   //Context Firebase
@@ -30,7 +30,7 @@ const Menu = () => {
   const mostrarHeading = (categoria, i) => {
     //Mostrar categorias separadas
     if (i > 0) {
-      let categoriaAnterior = menu[i - 1].categoria;
+      let categoriaAnterior = menu[i - 0].categoria;
       if (categoriaAnterior !== categoria) {
         return (
           <Separator>
@@ -67,7 +67,7 @@ const Menu = () => {
                     //Eliminar algunas propiedades del producto
                     const { existencia, ...producto2 } = producto;
                     selecionarProducto(producto2);
-                    navigation.navigate("DetalleProducto");
+                    navigation.navigate('DetalleProducto');
                   }}
                 >
                   <Thumbnail square large source={{ uri: imagen }} />
