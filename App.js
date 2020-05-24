@@ -25,6 +25,7 @@ import PedidoState from './context/pedidos/pedidosState';
 import BotonPedido from './components/ui/BotonPedido';
 import Registro from './views/Registro';
 import { Root } from 'native-base';
+import DetalleEntrega from './views/DetalleEntrega';
 
 //Boton del pedido
 
@@ -101,6 +102,13 @@ export default function App() {
                   component={FormularioPedido}
                   options={{
                     title: 'Formulario Pedido',
+                  }}
+                />
+                <Stack.Screen
+                  name="DetalleEntrega"
+                  component={DetalleEntrega}
+                  options={{
+                    title: ' DetalleEntrega',
                   }}
                 />
                 <Stack.Screen

@@ -52,6 +52,7 @@ const FirebaseState = (props) => {
         menu: state.menu,
         firebase,
         obtenerProductos,
+        usuario,
       }}
     >
       {props.children}
