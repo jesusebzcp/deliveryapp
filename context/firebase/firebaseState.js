@@ -1,15 +1,18 @@
-import React, { useReducer } from "react";
+import React, { useReducer } from 'react';
 //Importamos index.js de firebase
-import firebase from "../../firebase";
-import FireabseReducer from "./firebaseReducer";
-import FirebaseContext from "./firebaseContext";
+import firebase from '../../firebase';
+import FireabseReducer from './firebaseReducer';
+import FirebaseContext from './firebaseContext';
 //Importando lodash
-import _ from "lodash";
+import _ from 'lodash';
 
 //Important Types
-import { OBTENER_PRODUCTOS_EXITO } from "../../types";
+import { OBTENER_PRODUCTOS_EXITO } from '../../types';
+import useAutenticacion from '../../Hooks/useAutenticacion';
 
 const FirebaseState = (props) => {
+  const usuario = useAutenticacion();
+  console.log(usuario);
   //Creando state inicial
   const initialState = {
     menu: [],
@@ -23,8 +26,8 @@ const FirebaseState = (props) => {
   const obtenerProductos = () => {
     //Consultar firebase
     firebase.db
-      .collection("productos")
-      .where("existencia", "==", true) //Mjuestra los producto que solo tenga la extintecia como True
+      .collection('productos')
+      .where('existencia', '==', true) //Mjuestra los producto que solo tenga la extintecia como True
       .onSnapshot(manejarSnapchot);
     function manejarSnapchot(snapshot) {
       let productos = snapshot.docs.map((doc) => {
@@ -34,7 +37,7 @@ const FirebaseState = (props) => {
         };
       });
       //Ordenar por categoria usando lodash
-      productos = _.sortBy(productos, "categoria");
+      productos = _.sortBy(productos, 'categoria');
 
       //Resultados de la base de datos
       dispatch({
