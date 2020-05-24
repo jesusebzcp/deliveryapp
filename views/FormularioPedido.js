@@ -14,6 +14,9 @@ import {
   Footer,
   FooterTab,
   Textarea,
+  InputGroup,
+  List,
+  ListItem,
 } from 'native-base';
 
 import pedidoContext from '../context/pedidos/pedidosContext';
@@ -32,6 +35,7 @@ const FormularioPedido = () => {
   const [total, setotal] = useState(0);
   const [comentarios, setComentarios] = useState('');
   const [direccion, setDireccion] = useState('');
+  const [telefono, settelefono] = useState('');
 
   //extraer el precio del context
   const { producto, guardarPedido } = useContext(pedidoContext);
@@ -78,7 +82,7 @@ const FormularioPedido = () => {
               direccion,
               usuarioDate,
             };
-            setUsuarioDate({ cliente: { uid, displayName } });
+            setUsuarioDate({ cliente: { uid, displayName, telefono } });
             guardarPedido(pedido);
 
             //Navegar hacia el resumen
@@ -121,13 +125,30 @@ const FormularioPedido = () => {
               </Button>
             </Col>
           </Grid>
-          <View>
-            <Input
-              onChangeText={(texto) => setDireccion(texto)}
-              bordered
-              placeholder="Direccion de entrega"
-            />
-          </View>
+          <Grid>
+            <Col>
+              <View>
+                <Input
+                  bordered
+                  onChangeText={(texto) => setDireccion(texto)}
+                  bordered
+                  placeholder="Direccion de entrega"
+                />
+              </View>
+            </Col>
+
+            <Col>
+              <View>
+                <Input
+                  bordered
+                  keyboardType="numeric"
+                  onChangeText={(texto) => settelefono(texto)}
+                  name={telefono}
+                  placeholder="Numero por si las dudas"
+                />
+              </View>
+            </Col>
+          </Grid>
 
           <View>
             <Textarea
