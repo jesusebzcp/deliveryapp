@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import {
   Input,
@@ -58,27 +58,32 @@ const Login = () => {
   };
   return (
     <>
+      {mensaje && mostrarAlerta()}
+
       <Container style={styles.loginContainer}>
         <View stryle={styles.login}>
-          {mensaje && mostrarAlerta()}
+          <Image style={styles.logo} source={require('../assets/splash.png')} />
           <List>
             <ListItem>
               <InputGroup>
-                <Icon name="mail" style={{ fontSize: 20, color: 'black' }} />
+                <Icon name="mail" style={{ fontSize: 20, color: '#c5d250' }} />
                 <Input
                   onChangeText={(texto) => setcorreo(texto)}
                   name={correo}
-                  placeholder="Correo@correo"
+                  placeholder="Ingresa tu correo"
                 />
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
-                <Icon name="unlock" style={{ fontSize: 20, color: 'black' }} />
+                <Icon
+                  name="unlock"
+                  style={{ fontSize: 20, color: '#c5d250' }}
+                />
                 <Input
                   onChangeText={(texto) => setpassword(texto)}
                   name={password}
-                  placeholder="Contraseña"
+                  placeholder="Ingresa tu contraseña"
                   secureTextEntry={true}
                 />
               </InputGroup>
@@ -86,18 +91,24 @@ const Login = () => {
           </List>
           <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
             <Text style={styles.registrate}>
-              Eres nuevo por aqui? Registrate
+              ¿Eres nuevo por aqui? Registrate
             </Text>
           </TouchableOpacity>
         </View>
       </Container>
+
       <Footer>
         <FooterTab>
           <Button success iconRight onPress={() => iniciarSesion()}>
-            <Text style={{ fontSize: 15, color: 'black' }}>
+            <Text style={{ fontSize: 15, color: 'white' }}>
               Iniciar sesion {''}
               <Icon
-                style={{ fontSize: 18, color: 'black', padding: 60 }}
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  color: 'white',
+                  padding: 60,
+                }}
                 name="arrow-forward"
               />
             </Text>
@@ -108,6 +119,12 @@ const Login = () => {
   );
 };
 const styles = StyleSheet.create({
+  logo: {
+    width: '90%',
+    height: 200,
+    justifyContent: 'center',
+    marginHorizontal: '2.5%',
+  },
   loginContainer: {
     paddingTop: 20,
     flex: 1,
