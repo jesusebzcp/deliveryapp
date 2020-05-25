@@ -3,13 +3,15 @@ import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
-  Separator,
   Content,
   List,
   ListItem,
   Text,
   Body,
   Thumbnail,
+  Icon,
+  Grid,
+  Col,
 } from 'native-base';
 
 import FirebaseContext from '../context/firebase/firebaseContext';
@@ -28,20 +30,15 @@ const Menu = () => {
   //HOOK para redirecionar a detalle platillo
   const navigation = useNavigation();
 
-  const mostrarHeading = (categoria) => {
-    //Mostrar categorias separadas
-
-    return (
-      <Separator>
-        <Text>{categoria}</Text>
-      </Separator>
-    );
-  };
   return (
     <Container>
       <Content>
+        <Text style={styles.titulo}>Promociones </Text>
         <Promociones />
-        <Text style={styles.titulo}>Nuestros productos</Text>
+
+        <Text style={styles.titulo}>Popular</Text>
+        <Text style={styles.tituloMini}>Domicilio gratis</Text>
+
         <List>
           {menu.map((producto, i) => {
             const {
@@ -57,7 +54,6 @@ const Menu = () => {
             } else if (categoria != 'Promocion') {
               return (
                 <Fragment key={id}>
-                  {mostrarHeading(categoria, i)}
                   <ListItem
                     onPress={() => {
                       //Eliminar algunas propiedades del producto
@@ -66,13 +62,26 @@ const Menu = () => {
                       navigation.navigate('DetalleProducto');
                     }}
                   >
-                    <Thumbnail square large source={{ uri: imagen }} />
+                    <Thumbnail
+                      style={styles.img}
+                      large
+                      square
+                      source={{ uri: imagen }}
+                    />
                     <Body>
-                      <Text>{nombre}</Text>
+                      <Text style={styles.nombre}>{nombre}</Text>
                       <Text note numberOfLines={2}>
                         {descripcion}
                       </Text>
-                      <Text>Precio: {precio}$</Text>
+
+                      <Grid>
+                        <Col>
+                          <Text style={styles.precio}>{precio}COP</Text>
+                        </Col>
+                        <Col>
+                          <Text style={styles.categoria}> {categoria}</Text>
+                        </Col>
+                      </Grid>
                     </Body>
                   </ListItem>
                 </Fragment>
@@ -86,10 +95,31 @@ const Menu = () => {
 };
 
 const styles = StyleSheet.create({
+  nombre: {
+    fontWeight: 'bold',
+    fontSize: 17,
+  },
+  precio: {
+    color: 'green',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  categoria: {
+    color: 'orange',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  img: { borderRadius: 10 },
+  tituloMini: {
+    fontSize: 12,
+    color: 'gray',
+    marginLeft: 10,
+    marginBottom: 10,
+  },
   titulo: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginVertical: 20,
+    marginTop: 15,
     marginLeft: 10,
   },
   contenedor: {

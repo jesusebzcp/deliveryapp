@@ -91,7 +91,7 @@ export default function App() {
                       name="Menu"
                       component={Menu}
                       options={{
-                        title: 'Menu',
+                        title: 'Nuestros Productos',
                         headerRight: (props) => <BotonPedido />,
                       }}
                     />

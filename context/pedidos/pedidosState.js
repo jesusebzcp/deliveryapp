@@ -15,16 +15,18 @@ const PedidoState = (props) => {
   const initialState = {
     pedido: [],
     producto: null,
+    promocion: null,
     total: 0,
     idPedido: '',
   };
   const [state, dispatch] = useReducer(PedidosReducer, initialState);
   //Selecciona el producto que el usuario desea ordenar
-  const selecionarProducto = (producto) => {
+  const selecionarProducto = (producto, promocion) => {
     dispatch({
       type: SELECCIONAR_PRODUCTO,
 
       payload: producto,
+      promocion,
     });
   };
   //CUANDO EL USUARIO CONFIRME UN PRODUCTO
@@ -59,6 +61,7 @@ const PedidoState = (props) => {
       value={{
         pedido: state.pedido,
         producto: state.producto,
+        promocion: state.promocion,
         total: state.total,
         idPedido: state.idPedido,
         selecionarProducto,

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, Fragment } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { Text, Grid, Col } from 'native-base';
+import { Text, Grid, Col, Icon, Button, Card } from 'native-base';
 
 import FirebaseContext from '../context/firebase/firebaseContext';
 import PedidoContext from '../context/pedidos/pedidosContext';
@@ -27,25 +27,39 @@ const Promociones = () => {
           const { imagen, nombre, id, precio } = promocion;
           return (
             <Fragment key={id}>
-              <View
-                style={styles.sombra}
-                onPress={() => {
-                  //Eliminar algunas propiedades del producto
-                  const { existencia, ...producto2 } = promocion;
-                  selecionarProducto(producto2);
-                  navigation.navigate('DetalleProducto');
-                }}
-              >
-                <Image style={styles.imgPromocion} source={{ uri: imagen }} />
-                <Grid>
-                  <Col>
-                    <Text style={styles.nombrePromo}>{nombre}</Text>
-                  </Col>
-                  <Col>
-                    <Text style={styles.precio}>{precio}$</Text>
-                  </Col>
-                </Grid>
-              </View>
+              <Card style={styles.card}>
+                <View style={styles.bgPromo}>
+                  <Image style={styles.imgPromocion} source={{ uri: imagen }} />
+
+                  <Grid>
+                    <Col>
+                      <Text style={styles.nombrePromo}>{nombre}</Text>
+                      <Button
+                        style={styles.btn}
+                        onPress={() => {
+                          //Eliminar algunas propiedades del producto
+                          const { existencia, ...promocion2 } = promocion;
+                          console.log('presione');
+                          selecionarProducto(promocion2);
+                          navigation.navigate('DetalleProducto');
+                        }}
+                        iconRight
+                        success
+                        rounded
+                        small
+                        block
+                      >
+                        <Text>Ir A PROMO</Text>
+                        <Icon name="arrow-forward" />
+                      </Button>
+                    </Col>
+
+                    <Col>
+                      <Text style={styles.precio}>{precio}$</Text>
+                    </Col>
+                  </Grid>
+                </View>
+              </Card>
             </Fragment>
           );
         })}
@@ -57,32 +71,36 @@ const Promociones = () => {
 export default Promociones;
 
 const styles = StyleSheet.create({
-  nombrePromo: {
-    color: 'gray',
-    marginLeft: 10,
-  },
-  precio: {
-    fontWeight: 'bold',
-    color: '#c5d250',
-    marginLeft: 20,
-  },
-  imgPromocion: {
-    height: 200,
-    width: 250,
+  card: {
+    padding: 5,
     borderRadius: 10,
     marginRight: 10,
   },
-  sombra: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+  contBtn: {
+    backgroundColor: 'white',
   },
+  btn: {
+    marginBottom: 10,
+  },
+  nombrePromo: {
+    color: 'gray',
+    marginVertical: 10,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  precio: {
+    marginVertical: 10,
+    fontWeight: 'bold',
+    color: '#c5d250',
+    marginLeft: 100,
+  },
+  imgPromocion: {
+    height: 200,
+    width: 300,
+
+    borderRadius: 5,
+  },
+
   contenedor: {
     marginHorizontal: 10,
   },
