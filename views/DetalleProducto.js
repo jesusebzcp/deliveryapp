@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Image, StyleSheet } from "react-native";
+import React, { useContext } from 'react';
+import { Image, StyleSheet } from 'react-native';
 
 import {
   Container,
@@ -7,14 +7,16 @@ import {
   Footer,
   FooterTab,
   Button,
-  Body,
+  Icon,
   Text,
   H1,
-} from "native-base";
+  Col,
+  Grid,
+} from 'native-base';
 
-import pedidoContext from "../context/pedidos/pedidosContext";
+import pedidoContext from '../context/pedidos/pedidosContext';
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 
 const DetalleProducto = () => {
   //Redirecionar
@@ -27,17 +29,39 @@ const DetalleProducto = () => {
     <Container>
       <Content>
         <Image style={styles.imagen} source={{ uri: imagen }} />
+        <Grid>
+          <Col>
+            <H1 style={styles.titulo}>{nombre}</H1>
+          </Col>
+          <Col>
+            <Text style={styles.precio}>{precio}COP</Text>
+          </Col>
+        </Grid>
 
-        <H1 style={styles.titulo}>{nombre}</H1>
+        <H1 style={styles.tituloDescripcion}>Descripcion</H1>
         <Text note style={styles.descripcion}>
           {descripcion}
         </Text>
-        <Text style={styles.precio}>Precio:{precio}$</Text>
       </Content>
       <Footer>
         <FooterTab>
-          <Button onPress={() => navigation.navigate("FormularioPedido")}>
-            <Text>Pedir esto</Text>
+          <Button
+            success
+            iconRight
+            onPress={() => navigation.navigate('FormularioPedido')}
+          >
+            <Text style={{ fontSize: 15, color: 'white' }}>
+              Siguiente{' '}
+              <Icon
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  color: 'white',
+                  padding: 60,
+                }}
+                name="arrow-forward"
+              />
+            </Text>
           </Button>
         </FooterTab>
       </Footer>
@@ -45,21 +69,34 @@ const DetalleProducto = () => {
   );
 };
 const styles = StyleSheet.create({
+  textBtn: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  tituloDescripcion: {
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+    fontSize: 20,
+  },
   imagen: {
-    width: "100%",
-    height: 200,
+    width: '100%',
+    height: 400,
   },
   precio: {
-    margin: 20,
-    textAlign: "center",
+    textAlign: 'center',
+    marginVertical: 15,
+    fontWeight: 'bold',
+    color: 'green',
   },
   descripcion: {
     marginHorizontal: 10,
     marginVertical: 4,
-    color: "#969696",
+    color: '#969696',
   },
   titulo: {
-    textAlign: "center",
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
 });
 

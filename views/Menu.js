@@ -17,11 +17,12 @@ import {
 import FirebaseContext from '../context/firebase/firebaseContext';
 import PedidoContext from '../context/pedidos/pedidosContext';
 import Promociones from './Promociones';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ActivityIndicator, View } from 'react-native';
 const Menu = () => {
   //Context Firebase
   const { menu, obtenerProductos } = useContext(FirebaseContext);
   const { selecionarProducto } = useContext(PedidoContext);
+  console.log(menu);
 
   useEffect(() => {
     obtenerProductos();
@@ -29,7 +30,12 @@ const Menu = () => {
 
   //HOOK para redirecionar a detalle platillo
   const navigation = useNavigation();
-
+  if (menu.length === 0)
+    return (
+      <View style={{ marginTop: '100%' }}>
+        <ActivityIndicator size="large" color="green" />
+      </View>
+    );
   return (
     <Container>
       <Content>
@@ -49,6 +55,7 @@ const Menu = () => {
               categoria,
               id,
             } = producto;
+
             if (categoria === 'Promocion') {
               return null;
             } else if (categoria != 'Promocion') {

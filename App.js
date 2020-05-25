@@ -26,6 +26,7 @@ import BotonPedido from './components/ui/BotonPedido';
 import Registro from './views/Registro';
 import { Root } from 'native-base';
 import useAutenticacion from './Hooks/useAutenticacion';
+import { ActivityIndicator, View } from 'react-native';
 
 //Boton del pedido
 
@@ -49,8 +50,26 @@ export default function App() {
     });
     setisReady(true);
   }
+
   if (!isReady) {
     return <AppLoading />;
+  }
+  if (!usuario) {
+    setTimeout(() => {
+      return (
+        <View style={{ marginTop: '100%' }}>
+          <ActivityIndicator size="large" color="green" />
+        </View>
+      );
+    }, 3000);
+  } else {
+    setTimeout(() => {
+      return (
+        <View style={{ marginTop: '100%' }}>
+          <ActivityIndicator size="large" color="green" />
+        </View>
+      );
+    }, 3000);
   }
 
   return (
@@ -101,13 +120,14 @@ export default function App() {
                       component={DetalleProducto}
                       options={{
                         title: 'Detalle Producto',
+                        headerShown: false,
                       }}
                     />
                     <Stack.Screen
                       name="FormularioPedido"
                       component={FormularioPedido}
                       options={{
-                        title: 'Formulario Pedido',
+                        title: ' Detalles de la orden',
                       }}
                     />
 

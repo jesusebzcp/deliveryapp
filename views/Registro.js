@@ -50,7 +50,6 @@ const Registro = () => {
             displayName: nombre,
           });
         }
-        navigation.navigate('Login');
       })
       .catch(function (error) {
         setmensaje(error.message);

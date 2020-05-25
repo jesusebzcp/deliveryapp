@@ -15,11 +15,13 @@ import {
   FooterTab,
   Textarea,
   Toast,
+  Item,
+  Label,
 } from 'native-base';
 
 import pedidoContext from '../context/pedidos/pedidosContext';
 import { useNavigation } from '@react-navigation/native';
-import { Alert, View } from 'react-native';
+import { Alert, View, StyleSheet } from 'react-native';
 import FirebaseContext from '../context/firebase/firebaseContext';
 
 const FormularioPedido = () => {
@@ -114,12 +116,15 @@ const FormularioPedido = () => {
   return (
     <Container>
       {mensajeError && mostrarAlerta()}
-      <Content>
+      <Content style={styles.container}>
         <Form>
-          <H1>sumar</H1>
-          <Grid>
+          <H1 style={styles.titulo}>Ingresa el numero de articulos</H1>
+          <Text style={styles.tituloMini}>
+            Por favor ingrese todos los campos
+          </Text>
+          <Grid style={styles.suma}>
             <Col>
-              <Button props dark onPress={() => decrementarUno()}>
+              <Button rounded block props dark onPress={() => decrementarUno()}>
                 <Icon name="remove" />
               </Button>
             </Col>
@@ -134,58 +139,108 @@ const FormularioPedido = () => {
             </Col>
 
             <Col>
-              <Button props dark onPress={() => incrementarUno()}>
+              <Button rounded block props dark onPress={() => incrementarUno()}>
                 <Icon name="add" />
               </Button>
+            </Col>
+          </Grid>
+          <Grid>
+            <Col>
+              {pedido.length === 0 && (
+                <>
+                  <View>
+                    <Item>
+                      <Icon
+                        activate
+                        name="pin"
+                        style={{ fontSize: 20, color: '#c5d250' }}
+                      />
+                      <Input
+                        placeholder="Domicilio"
+                        onChangeText={(texto) => setDireccion(texto)}
+                      />
+                    </Item>
+                  </View>
+                </>
+              )}
             </Col>
           </Grid>
           {pedido.length === 0 && (
             <>
               <Grid>
                 <Col>
-                  <View>
-                    <Input
-                      bordered
-                      onChangeText={(texto) => setDireccion(texto)}
-                      bordered
-                      placeholder="Direccion de entrega"
-                    />
-                  </View>
-                </Col>
-
-                <Col>
-                  <View>
-                    <Input
-                      bordered
-                      keyboardType="numeric"
-                      onChangeText={(texto) => settelefono(texto)}
-                      name={telefono}
-                      placeholder="Numero por si las dudas"
-                    />
+                  <View style={{ marginTop: 20 }}>
+                    <Item>
+                      <Icon
+                        activate
+                        name="call"
+                        style={{ fontSize: 20, color: '#c5d250' }}
+                      />
+                      <Input
+                        keyboardType="numeric"
+                        placeholder="Numero de celular"
+                        onChangeText={(texto) => settelefono(texto)}
+                      />
+                    </Item>
                   </View>
                 </Col>
               </Grid>
             </>
           )}
-          <View>
+
+          <View style={{ marginTop: 20 }}>
             <Textarea
               onChangeText={(texto) => setComentarios(texto)}
-              rowSpan={3}
+              rowSpan={4}
               bordered
-              placeholder="Comentarios"
+              placeholder="Ingresa comentarios aqui....."
             />
           </View>
         </Form>
       </Content>
       <Footer>
         <FooterTab>
-          <Button onPress={() => confirmaOrdne()}>
-            <Text>Agregar al pedido ${total}</Text>
+          <Button success iconRight onPress={() => confirmaOrdne()}>
+            <Text style={{ fontSize: 15, color: 'white' }}>
+              Agregar {cantidad} articulo al carrito | {total}COP
+              <Icon
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  color: 'white',
+                  padding: 60,
+                }}
+                name="cart"
+              />
+            </Text>
           </Button>
         </FooterTab>
       </Footer>
     </Container>
   );
 };
+const styles = StyleSheet.create({
+  tituloMini: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    color: 'gray',
+  },
+  titulo: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  container: {
+    marginHorizontal: 20,
+  },
+  suma: {
+    justifyContent: 'center',
 
+    marginTop: 20,
+  },
+  btn: {
+    backgroundColor: 'green',
+    borderRadius: 50,
+    paddingHorizontal: 40,
+  },
+});
 export default FormularioPedido;

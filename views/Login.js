@@ -43,7 +43,6 @@ const Login = () => {
     //Iniciar sesion
     try {
       await firebase.auth.signInWithEmailAndPassword(correo, password);
-      navigation.navigate('Menu');
     } catch (error) {
       setmensaje(error.message);
     }

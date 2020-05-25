@@ -6,7 +6,7 @@ import { Text, Grid, Col, Icon, Button, Card } from 'native-base';
 import FirebaseContext from '../context/firebase/firebaseContext';
 import PedidoContext from '../context/pedidos/pedidosContext';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet, ActivityIndicator } from 'react-native';
 
 const Promociones = () => {
   //Context Firebase
@@ -19,7 +19,12 @@ const Promociones = () => {
 
   //HOOK para redirecionar a detalle platillo
   const navigation = useNavigation();
-
+  if (promociones.length === 0)
+    return (
+      <View style={{ marginTop: '50%' }}>
+        <ActivityIndicator size="large" color="green" />
+      </View>
+    );
   return (
     <View style={styles.contenedor}>
       <ScrollView horizontal renderToHardwareTextureAndroid>
