@@ -14,7 +14,8 @@ import {
 
 import FirebaseContext from '../context/firebase/firebaseContext';
 import PedidoContext from '../context/pedidos/pedidosContext';
-
+import Promociones from './Promociones';
+import { StyleSheet } from 'react-native';
 const Menu = () => {
   //Context Firebase
   const { menu, obtenerProductos } = useContext(FirebaseContext);
@@ -39,6 +40,8 @@ const Menu = () => {
   return (
     <Container>
       <Content>
+        <Promociones />
+        <Text style={styles.titulo}>Nuestros productos</Text>
         <List>
           {menu.map((producto, i) => {
             const {
@@ -77,5 +80,17 @@ const Menu = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  titulo: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginVertical: 20,
+    marginLeft: 10,
+  },
+  contenedor: {
+    marginHorizontal: 10,
+  },
+});
 
 export default Menu;
