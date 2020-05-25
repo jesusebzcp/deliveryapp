@@ -7,15 +7,19 @@ import FirebaseContext from './firebaseContext';
 import _ from 'lodash';
 
 //Important Types
-import { OBTENER_PRODUCTOS_EXITO } from '../../types';
+import {
+  OBTENER_PRODUCTOS_EXITO,
+  OBTENER_PROMOCIONES_EXITO,
+} from '../../types';
 import useAutenticacion from '../../Hooks/useAutenticacion';
 
 const FirebaseState = (props) => {
   const usuario = useAutenticacion();
-  console.log(usuario);
+
   //Creando state inicial
   const initialState = {
     menu: [],
+    promociones: [],
   };
 
   //useREDUCER
@@ -46,12 +50,37 @@ const FirebaseState = (props) => {
       });
     }
   };
+
+  const obtenerPromociones = () => {
+    //Consultar firebase
+    firebase.db
+      .collection('productos')
+      .where('categoria', '==', 'Promocion') //Mjuestra los producto que solo tenga la extintecia como True
+      .onSnapshot(manejarSnapchot);
+    function manejarSnapchot(snapshot) {
+      let promocion = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      //Resultados de la base de datos
+      dispatch({
+        type: OBTENER_PROMOCIONES_EXITO,
+
+        payload: promocion,
+      });
+    }
+  };
   return (
     <FirebaseContext.Provider
       value={{
         menu: state.menu,
+        promociones: state.promociones,
         firebase,
         obtenerProductos,
+        obtenerPromociones,
         usuario,
       }}
     >

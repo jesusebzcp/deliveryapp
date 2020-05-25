@@ -52,28 +52,32 @@ const Menu = () => {
               categoria,
               id,
             } = producto;
-            return (
-              <Fragment key={id}>
-                {mostrarHeading(categoria, i)}
-                <ListItem
-                  onPress={() => {
-                    //Eliminar algunas propiedades del producto
-                    const { existencia, ...producto2 } = producto;
-                    selecionarProducto(producto2);
-                    navigation.navigate('DetalleProducto');
-                  }}
-                >
-                  <Thumbnail square large source={{ uri: imagen }} />
-                  <Body>
-                    <Text>{nombre}</Text>
-                    <Text note numberOfLines={2}>
-                      {descripcion}
-                    </Text>
-                    <Text>Precio: {precio}$</Text>
-                  </Body>
-                </ListItem>
-              </Fragment>
-            );
+            if (categoria === 'Promocion') {
+              return null;
+            } else if (categoria != 'Promocion') {
+              return (
+                <Fragment key={id}>
+                  {mostrarHeading(categoria, i)}
+                  <ListItem
+                    onPress={() => {
+                      //Eliminar algunas propiedades del producto
+                      const { existencia, ...producto2 } = producto;
+                      selecionarProducto(producto2);
+                      navigation.navigate('DetalleProducto');
+                    }}
+                  >
+                    <Thumbnail square large source={{ uri: imagen }} />
+                    <Body>
+                      <Text>{nombre}</Text>
+                      <Text note numberOfLines={2}>
+                        {descripcion}
+                      </Text>
+                      <Text>Precio: {precio}$</Text>
+                    </Body>
+                  </ListItem>
+                </Fragment>
+              );
+            }
           })}
         </List>
       </Content>
