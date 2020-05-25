@@ -15,6 +15,7 @@ import {
   ListItem,
   Text,
   View,
+  H1,
 } from 'native-base';
 import firebase from '../firebase';
 import { useNavigation } from '@react-navigation/native';
@@ -71,30 +72,30 @@ const Registro = () => {
         <List>
           <ListItem>
             <InputGroup>
-              <Icon name="person" style={{ fontSize: 20, color: 'black' }} />
+              <Icon name="person" style={{ fontSize: 20, color: '#c5d250' }} />
               <Input
                 onChangeText={(texto) => setnombre(texto)}
-                placeholder="Nombre"
+                placeholder="Ingresa tu nombre"
               />
             </InputGroup>
           </ListItem>
           <ListItem>
             <InputGroup>
-              <Icon name="mail" style={{ fontSize: 20, color: 'black' }} />
+              <Icon name="mail" style={{ fontSize: 20, color: '#c5d250' }} />
               <Input
                 onChangeText={(texto) => setcorreo(texto)}
                 name={correo}
-                placeholder="Correo@correo"
+                placeholder="Ingresa tu correo"
               />
             </InputGroup>
           </ListItem>
           <ListItem>
             <InputGroup>
-              <Icon name="unlock" style={{ fontSize: 20, color: 'black' }} />
+              <Icon name="unlock" style={{ fontSize: 20, color: '#c5d250' }} />
               <Input
                 onChangeText={(texto) => setpassword(texto)}
                 name={password}
-                placeholder="Contraseña"
+                placeholder="Ingresa tu Contraseña (Debe ser mayor a 6 caracteres)"
                 secureTextEntry={true}
               />
             </InputGroup>
@@ -105,10 +106,10 @@ const Registro = () => {
       <Footer>
         <FooterTab>
           <Button success iconRight onPress={() => crearCuenta()}>
-            <Text style={{ fontSize: 15, color: 'black' }}>
-              Registrarme {''}
+            <Text style={{ fontSize: 15, color: 'white' }}>
+              Crearme una cuenta {''}
               <Icon
-                style={{ fontSize: 18, color: 'black', padding: 60 }}
+                style={{ fontSize: 18, color: 'white', padding: 60 }}
                 name="arrow-forward"
               />
             </Text>
