@@ -14,6 +14,7 @@ import {
   Footer,
   FooterTab,
   Textarea,
+  Toast,
 } from 'native-base';
 
 import pedidoContext from '../context/pedidos/pedidosContext';
@@ -34,6 +35,7 @@ const FormularioPedido = () => {
   const [comentarios, setComentarios] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, settelefono] = useState('');
+  const [mensajeError, setMensajeError] = useState(null);
 
   //extraer el precio del context
   const { producto, guardarPedido, pedido } = useContext(pedidoContext);
@@ -65,42 +67,53 @@ const FormularioPedido = () => {
   //Confirma  si la orden es correcta
 
   const confirmaOrdne = () => {
-    Alert.alert(
-      '¿Deseas confirmar tu pedido?',
-      'Una vez confirmes tu pedido, no lo podras modificar',
-      [
-        {
-          text: 'Confirmar',
-          onPress: () => {
-            //Almacenar pedido al pedido principal
-            const pedido = {
-              ...producto,
-              cantidad,
-              total,
-              comentarios,
-              direccion,
-              uid,
-              displayName,
-              telefono,
-            };
+    if (telefono === '' && direccion == '' && comentarios === '') {
+      setMensajeError('Todos los campos son necesedarios');
+    } else {
+      Alert.alert(
+        '¿Deseas confirmar tu pedido?',
+        'Una vez confirmes tu pedido, no lo podras modificar',
+        [
+          {
+            text: 'Confirmar',
+            onPress: () => {
+              //Almacenar pedido al pedido principal
+              const pedido = {
+                ...producto,
+                cantidad,
+                total,
+                comentarios,
+                direccion,
+                uid,
+                displayName,
+                telefono,
+              };
 
-            guardarPedido(pedido);
+              guardarPedido(pedido);
 
-            //Navegar hacia el resumen
+              //Navegar hacia el resumen
 
-            navigation.navigate('ResumenPedido');
+              navigation.navigate('ResumenPedido');
+            },
           },
-        },
-        {
-          text: ' Cancelar',
-          style: 'cancel',
-        },
-      ],
-    );
+          {
+            text: ' Cancelar',
+            style: 'cancel',
+          },
+        ],
+      );
+    }
   };
-
+  const mostrarAlerta = () => {
+    Toast.show({
+      text: mensajeError,
+      buttonText: 'OK',
+      duration: 3000,
+    });
+  };
   return (
     <Container>
+      {mensajeError && mostrarAlerta()}
       <Content>
         <Form>
           <H1>sumar</H1>
@@ -162,13 +175,12 @@ const FormularioPedido = () => {
               placeholder="Comentarios"
             />
           </View>
-          <Text>Total{total}</Text>
         </Form>
       </Content>
       <Footer>
         <FooterTab>
           <Button onPress={() => confirmaOrdne()}>
-            <Text>Agregar al pedido </Text>
+            <Text>Agregar al pedido ${total}</Text>
           </Button>
         </FooterTab>
       </Footer>

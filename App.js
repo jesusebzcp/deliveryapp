@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -80,7 +80,7 @@ export default function App() {
                       name="Registro"
                       component={Registro}
                       options={{
-                        title: 'Registro',
+                        title: 'Ingresa tus datos',
                       }}
                     />
                   </>
