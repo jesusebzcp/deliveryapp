@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 //importanto las pantallas
 
@@ -20,6 +20,7 @@ import BotonAgregar from './components/ui/BotonAgregar';
 import Registro from './views/Registro';
 
 import useAutenticacion from './Hooks/useAutenticacion';
+import DetalleUsuario from './views/DetalleUsuario';
 
 //Boton del pedido
 
@@ -98,6 +99,13 @@ const Navegacion = () => {
                 options={{
                   title: 'Progreso Pedido',
                   headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="DetalleUsuario"
+                component={DetalleUsuario}
+                options={{
+                  title: 'Mi cuenta',
                 }}
               />
             </>

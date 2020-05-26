@@ -33,6 +33,7 @@ const DetalleProducto = () => {
           <Col>
             <H1 style={styles.titulo}>{nombre}</H1>
           </Col>
+
           <Col>
             <Text style={styles.precio}>{precio}COP</Text>
           </Col>

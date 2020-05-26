@@ -12,12 +12,17 @@ import {
   Icon,
   Grid,
   Col,
+  Footer,
+  FooterTab,
+  Button,
 } from 'native-base';
 
 import FirebaseContext from '../context/firebase/firebaseContext';
 import PedidoContext from '../context/pedidos/pedidosContext';
 import Promociones from './Promociones';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import BotonUsuario from '../components/ui/BotonUsuario';
+
 const Menu = () => {
   //Context Firebase
   const { menu, obtenerProductos } = useContext(FirebaseContext);
@@ -38,6 +43,7 @@ const Menu = () => {
   return (
     <Container>
       <Content>
+        <BotonUsuario />
         <Text style={styles.titulo}>Promociones </Text>
         <Promociones />
 
