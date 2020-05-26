@@ -67,37 +67,49 @@ const ResumenPedido = () => {
   };
 
   const progresoPedido = () => {
-    Alert.alert(
-      'Revisa tu pedido',
-      'Una vez que revisas tu pedido no podras cambiarlo',
-      [
-        {
-          text: 'Confirmar',
-          onPress: async () => {
-            //Escribir en firebase
-            //Crear un objecto con toda la infromacion que requerimos
-            const pedidoObj = {
-              tiempoEntrega: 0,
-              completado: false,
-              total: Number(total),
-              orden: pedido, //Array
-              creado: Date.now(),
-            };
-
-            try {
-              const pedido = await firebase.db
-                .collection('ordenes')
-                .add(pedidoObj);
-              pedidoRealizado(pedido.id);
-              navigation.navigate('ProgresoPedido');
-            } catch (error) {
-              console.log(error);
-            }
+    if (pedido.length === 0) {
+      Alert.alert(
+        'No  puedes ordenar ',
+        'No tienes productos que comprar por favor añade un producto',
+        [
+          {
+            text: 'OK',
           },
-        },
-        { text: 'Revisar', style: 'cancel' },
-      ],
-    );
+        ],
+      );
+    } else {
+      Alert.alert(
+        'Revisa tu pedido',
+        'Una vez que revisas tu pedido no podras cambiarlo',
+        [
+          {
+            text: 'Confirmar',
+            onPress: async () => {
+              //Escribir en firebase
+              //Crear un objecto con toda la infromacion que requerimos
+              const pedidoObj = {
+                tiempoEntrega: 0,
+                completado: false,
+                total: Number(total),
+                orden: pedido, //Array
+                creado: Date.now(),
+              };
+
+              try {
+                const pedido = await firebase.db
+                  .collection('ordenes')
+                  .add(pedidoObj);
+                pedidoRealizado(pedido.id);
+                navigation.navigate('ProgresoPedido');
+              } catch (error) {
+                console.log(error);
+              }
+            },
+          },
+          { text: 'Revisar', style: 'cancel' },
+        ],
+      );
+    }
   };
 
   const confirmarEliminacion = (id) => {
@@ -246,7 +258,7 @@ const ResumenPedido = () => {
         <View
           style={{
             marginTop: 10,
-            borderTopColor: '#454545',
+            borderTopColor: '#DEDEDE',
             borderTopWidth: 1,
           }}
         >
@@ -318,14 +330,17 @@ const ResumenPedido = () => {
             </Col>
           </Grid>
         </View>
-        {/*     <Button onPress={() => navigation.navigate('Menu')}>
-          <Text>Seguir pediendo</Text>
-        </Button> */}
       </Content>
       <Footer>
         <FooterTab>
-          <Button onPress={() => progresoPedido()}>
-            <Text>Ordenar Pedido </Text>
+          <Button success iconRight onPress={() => progresoPedido()}>
+            <Text style={{ fontSize: 15, color: 'white' }}>
+              Ordenar que lo traigan{' '}
+              <Icon
+                style={{ fontSize: 18, color: 'white', padding: 60 }}
+                name="bicycle"
+              />
+            </Text>
           </Button>
         </FooterTab>
       </Footer>
@@ -334,29 +349,3 @@ const ResumenPedido = () => {
 };
 
 export default ResumenPedido;
-{
-  /* <List key={id + i}>
-<ListItem thumbnail>
-  <Grid>
-    <Col>
-      <Thumbnail large square source={{ uri: imagen }} />
-    </Col>
-    <Col>
-      <Text>{nombre}</Text>
-    </Col>
-    <Col>
-    
-      <Text>Cantidad:{cantidad}</Text>
-    </Col>
-    <Col>
-    
-      <Text>Precio{precio}$</Text>
-    </Col>
-  </Grid>
-
-  <Button onPress={() => confirmarEliminacion(id)} danger full>
-    <Text>Eliminar</Text>
-  </Button>
-</ListItem>
-</List> */
-}

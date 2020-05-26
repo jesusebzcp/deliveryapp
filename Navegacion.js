@@ -97,6 +97,7 @@ const Navegacion = () => {
                 component={ProgresoPedido}
                 options={{
                   title: 'Progreso Pedido',
+                  headerShown: false,
                 }}
               />
             </>
