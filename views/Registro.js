@@ -61,6 +61,9 @@ const Registro = () => {
       text: mensaje,
       buttonText: 'OK',
       duration: 3000,
+
+      type: 'danger',
+      position: 'top',
     });
   };
 

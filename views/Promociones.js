@@ -44,7 +44,7 @@ const Promociones = () => {
                         onPress={() => {
                           //Eliminar algunas propiedades del producto
                           const { existencia, ...promocion2 } = promocion;
-                          console.log('presione');
+
                           selecionarProducto(promocion2);
                           navigation.navigate('DetalleProducto');
                         }}

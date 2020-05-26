@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Button, Text } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import React, { useContext } from 'react';
+import { Button, Text, Icon, Badge } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 
-import PedidoContext from "../../context/pedidos/pedidosContext";
+import PedidoContext from '../../context/pedidos/pedidosContext';
 
 const BotonPedido = () => {
   const navigation = useNavigation();
@@ -10,10 +10,18 @@ const BotonPedido = () => {
   //Leer el objecto de pedido
   const { pedido } = useContext(PedidoContext);
   if (pedido.length === 0) return null;
-
+  const pedidoCarrito = pedido.length;
   return (
-    <Button onPress={() => navigation.navigate("ResumenPedido")}>
-      <Text>ir al carrito</Text>
+    <Button
+      success
+      transparent
+      active
+      onPress={() => navigation.navigate('ResumenPedido')}
+    >
+      <Text>
+        Ir <Icon style={{ fontSize: 15, color: 'green' }} active name="cart" />
+        <Text style={{ fontSize: 15, color: 'red' }}> {pedidoCarrito}</Text>
+      </Text>
     </Button>
   );
 };

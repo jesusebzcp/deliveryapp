@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Container, Text, H1, H3, Button } from 'native-base';
+
+import { Container, Text, H1, Button } from 'native-base';
 import PedidoContext from '../context/pedidos/pedidosContext';
 import firebase from '../firebase';
 import Countdown from 'react-countdown';

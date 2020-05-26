@@ -22,7 +22,6 @@ const Menu = () => {
   //Context Firebase
   const { menu, obtenerProductos } = useContext(FirebaseContext);
   const { selecionarProducto } = useContext(PedidoContext);
-  console.log(menu);
 
   useEffect(() => {
     obtenerProductos();

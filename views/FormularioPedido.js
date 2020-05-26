@@ -41,7 +41,7 @@ const FormularioPedido = () => {
 
   //extraer el precio del context
   const { producto, guardarPedido, pedido } = useContext(pedidoContext);
-  console.log(' aqui va el', pedido);
+
   const { precio } = producto;
 
   useEffect(() => {
@@ -111,6 +111,8 @@ const FormularioPedido = () => {
       text: mensajeError,
       buttonText: 'OK',
       duration: 3000,
+      type: 'danger',
+      position: 'top',
     });
   };
   return (
