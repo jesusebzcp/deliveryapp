@@ -22,6 +22,7 @@ import PedidoContext from '../context/pedidos/pedidosContext';
 import Promociones from './Promociones';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
 import BotonUsuario from '../components/ui/BotonUsuario';
+import Categorias from './Categorias';
 
 const Menu = () => {
   //Context Firebase
@@ -44,8 +45,15 @@ const Menu = () => {
     <Container>
       <Content>
         <BotonUsuario />
-        <Text style={styles.titulo}>Promociones </Text>
-        <Promociones />
+        <View>
+          <Text style={styles.titulo}>Promociones </Text>
+          <Promociones />
+        </View>
+        <View>
+          <Text style={styles.titulo}>Categorias </Text>
+          <Text style={styles.tituloMini}>Busca por categorias </Text>
+          <Categorias />
+        </View>
 
         <Text style={styles.titulo}>Popular</Text>
         <Text style={styles.tituloMini}>Domicilio gratis</Text>
