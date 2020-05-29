@@ -14,9 +14,10 @@ import {
   ListItem,
   Text,
   View,
+  Item,
 } from 'native-base';
-import firebase from '../firebase';
 
+import firebase from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
@@ -26,7 +27,18 @@ const Login = () => {
   const [password, setpassword] = useState('');
 
   const [mensaje, setmensaje] = useState(null);
+  const [verPassword, setVerPassword] = useState(true);
+  const [icon, setIcon] = useState('eye-off');
 
+  const cambiarIcon = (e) => {
+    if (icon === 'eye-off') {
+      setIcon('eye');
+      setVerPassword(false);
+    } else {
+      setIcon('eye-off');
+      setVerPassword(true);
+    }
+  };
   const iniciarSesion = async () => {
     //validar
     if (correo === '' && password === '') {
@@ -76,20 +88,20 @@ const Login = () => {
                 />
               </InputGroup>
             </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Icon
-                  name="unlock"
-                  style={{ fontSize: 20, color: '#c5d250' }}
-                />
-                <Input
-                  onChangeText={(texto) => setpassword(texto)}
-                  name={password}
-                  placeholder="Ingresa tu contraseña"
-                  secureTextEntry={true}
-                />
-              </InputGroup>
-            </ListItem>
+            <Item style={{ marginLeft: 15 }} floatingLabel>
+              <Icon style={{ fontSize: 20, color: '#c5d250' }} name="lock" />
+
+              <Input
+                onChangeText={(texto) => setpassword(texto)}
+                placeholder="Ingresa tu nueva contraseña"
+                secureTextEntry={verPassword}
+              />
+              <Icon
+                style={{ fontSize: 20 }}
+                name={icon}
+                onPress={(e) => cambiarIcon(e)}
+              />
+            </Item>
           </List>
           <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
             <Text style={styles.registrate}>

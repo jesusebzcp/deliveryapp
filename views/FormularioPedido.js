@@ -37,6 +37,7 @@ const FormularioPedido = () => {
   const [comentarios, setComentarios] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, settelefono] = useState('');
+  const [sencillo, setSenciilo] = useState('');
   const [mensajeError, setMensajeError] = useState(null);
 
   //extraer el precio del context
@@ -89,6 +90,7 @@ const FormularioPedido = () => {
                 uid,
                 displayName,
                 telefono,
+                sencillo,
               };
 
               guardarPedido(pedido);
@@ -187,6 +189,19 @@ const FormularioPedido = () => {
                   </View>
                 </Col>
               </Grid>
+              <View style={{ marginTop: 20 }}>
+                <Item>
+                  <Icon
+                    activate
+                    name="cash"
+                    style={{ fontSize: 20, color: '#c5d250' }}
+                  />
+                  <Input
+                    placeholder="¿Con que billete cancelas?"
+                    onChangeText={(texto) => setSenciilo(texto)}
+                  />
+                </Item>
+              </View>
             </>
           )}
 

@@ -15,7 +15,7 @@ import {
   ListItem,
   Text,
   View,
-  H1,
+  Item,
 } from 'native-base';
 import firebase from '../firebase';
 import { useNavigation } from '@react-navigation/native';
@@ -25,7 +25,18 @@ const Registro = () => {
   const [nombre, setnombre] = useState('');
   const [correo, setcorreo] = useState('');
   const [password, setpassword] = useState('');
+  const [verPassword, setVerPassword] = useState(true);
+  const [icon, setIcon] = useState('eye-off');
 
+  const cambiarIcon = (e) => {
+    if (icon === 'eye-off') {
+      setIcon('eye');
+      setVerPassword(false);
+    } else {
+      setIcon('eye-off');
+      setVerPassword(true);
+    }
+  };
   const [mensaje, setmensaje] = useState(null);
 
   const crearCuenta = async () => {
@@ -91,17 +102,21 @@ const Registro = () => {
               />
             </InputGroup>
           </ListItem>
-          <ListItem>
-            <InputGroup>
-              <Icon name="unlock" style={{ fontSize: 20, color: '#c5d250' }} />
-              <Input
-                onChangeText={(texto) => setpassword(texto)}
-                name={password}
-                placeholder="Ingresa tu Contraseña (Debe ser mayor a 6 caracteres)"
-                secureTextEntry={true}
-              />
-            </InputGroup>
-          </ListItem>
+
+          <Item style={{ marginLeft: 15 }} floatingLabel>
+            <Icon style={{ fontSize: 20, color: '#c5d250' }} name="lock" />
+
+            <Input
+              onChangeText={(texto) => setpassword(texto)}
+              placeholder="Ingresa contraseña"
+              secureTextEntry={verPassword}
+            />
+            <Icon
+              style={{ fontSize: 20 }}
+              name={icon}
+              onPress={(e) => cambiarIcon(e)}
+            />
+          </Item>
         </List>
       </Content>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Content, Container, Text, Button, Icon } from 'native-base';
 import firebase from '../firebase';
 import { StyleSheet, View, Image } from 'react-native';
@@ -10,15 +10,6 @@ const DetalleUsuario = () => {
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
 
-  useEffect(() => {
-    llamarUsuario();
-  }, []);
-
-  const llamarUsuario = () => {
-    const { displayName, email } = usuario;
-    setNombre(displayName);
-    setCorreo(email);
-  };
   const cerrarSesion = async () => {
     try {
       await firebase.auth.signOut();
@@ -26,7 +17,14 @@ const DetalleUsuario = () => {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    llamarUsuario();
+  }, []);
+  const llamarUsuario = () => {
+    const { displayName, email } = usuario;
+    setCorreo(email);
+    setNombre(displayName);
+  };
   return (
     <Container>
       <Button danger transparent onPress={() => cerrarSesion()}>
@@ -44,13 +42,6 @@ const DetalleUsuario = () => {
             source={require('../assets/avatar.png')}
           />
           <Text> Tu correo: {correo} </Text>
-
-          <Button success transparent onPress={() => actualizarPassword()}>
-            <Text>
-              Actualizar contraseña{' '}
-              <Icon style={{ fontSize: 18, color: 'green' }} name="repeat" />
-            </Text>
-          </Button>
         </View>
       </Content>
     </Container>
